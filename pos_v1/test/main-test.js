@@ -17,6 +17,235 @@ describe('pos', function() {
     ];
   });
 
+  describe('Unit Test', function() {
+    describe('Text SubItems',function () {
+      it('return right subItems',function () {
+        var subItems=buildSubItems(inputs);
+         expect(subItems).toEqual([
+          {
+            barcode: 'ITEM000001',
+            name: '雪碧',
+            price: 3.00,
+            unit: '瓶'
+          },
+         {
+          barcode: 'ITEM000001',
+          name: '雪碧',
+          price: 3.00,
+          unit: '瓶'
+         },
+         {
+          barcode: 'ITEM000001',
+          name: '雪碧',
+          price: 3.00,
+          unit: '瓶'
+         },
+         {
+         barcode: 'ITEM000001',
+         name: '雪碧',
+         price: 3.00,
+         unit: '瓶'
+         },
+         {
+         barcode: 'ITEM000001',
+         name: '雪碧',
+         price: 3.00,
+         unit: '瓶'
+         },
+          {
+            barcode: 'ITEM000003',
+            name: '荔枝',
+            price: 15.00,
+             unit: '斤'
+          },
+         {
+         barcode: 'ITEM000003',
+         name: '荔枝',
+         price: 15.00,
+         unit: '斤'
+         },
+          {
+            barcode: 'ITEM000005',
+            name: '方便面',
+            price: 4.50,
+            unit: '袋'
+          },
+         {
+         barcode: 'ITEM000005',
+         name: '方便面',
+         price: 4.50,
+         unit: '袋'
+         },
+         {
+         barcode: 'ITEM000005',
+         name: '方便面',
+         price: 4.50,
+         unit: '袋'
+         }
+        ]);
+
+      });
+
+    });
+    });
+
+
+  describe('Unit Test', function() {
+    describe('Text Items',function () {
+      it('return right Items',function () {
+        var subItems=buildSubItems(inputs);
+        var Items=buildItems(subItems);
+        expect(Items).toEqual([
+          {
+            barcode: 'ITEM000001',
+            count:5,
+            name:'雪碧',
+            price: 3.00,
+            unit: '瓶'
+
+          },
+          {
+            barcode: 'ITEM000003',
+            count:2,
+            name: '荔枝',
+            price: 15.00,
+            unit: '斤'
+          },
+          {
+            barcode: 'ITEM000005',
+            count:3,
+            name: '方便面',
+            price: 4.50,
+            unit: '袋'
+          }
+
+        ]);
+
+      });
+
+    });
+  });
+
+  describe('Unit Test', function() {
+    describe('Text cartItems',function () {
+      it('return right Items',function () {
+        var subItems=buildSubItems(inputs);
+        var Items=buildItems(subItems);
+        var cartItems=buildCartItems(Items);
+        expect(cartItems).toEqual([
+          {
+            Item:{
+                  barcode: 'ITEM000001',
+                  count:5,
+                  name:'雪碧',
+                  price: 3.00,
+                  unit: '瓶'
+
+                 },
+            subSave:3,
+            subTotal:12
+
+          },
+          {
+            Item:{
+              barcode: 'ITEM000003',
+              count:2,
+              name: '荔枝',
+              price: 15.00,
+              unit: '斤'
+
+            },
+            subSave:0,
+            subTotal:30
+
+          },
+          {
+            Item:{
+              barcode: 'ITEM000005',
+              count:3,
+              name: '方便面',
+              price: 4.50,
+              unit: '袋'
+
+            },
+            subSave:4.5,
+            subTotal:9
+
+          }
+
+
+        ]);
+
+      });
+
+    });
+  });
+
+  describe('Unit Test', function() {
+    describe('Text receiptItems',function () {
+      it('return right receiptItems',function () {
+        var subItems=buildSubItems(inputs);
+        var Items=buildItems(subItems);
+        var cartItems=buildCartItems(Items);
+        var  receiptItems= buildReceiptItems(cartItems);
+        expect(receiptItems).toEqual({
+          Save:7.5,
+        cartItems:[{
+            Item:{
+              barcode: 'ITEM000001',
+              count:5,
+              name:'雪碧',
+              price: 3.00,
+              unit: '瓶'
+
+            },
+            subSave:3,
+            subTotal:12
+
+          },
+          {
+            Item:{
+              barcode: 'ITEM000003',
+              count:2,
+              name: '荔枝',
+              price: 15.00,
+              unit: '斤'
+
+            },
+            subSave:0,
+            subTotal:30
+
+          },
+          {
+            Item:{
+              barcode: 'ITEM000005',
+              count:3,
+              name: '方便面',
+              price: 4.50,
+              unit: '袋'
+
+            },
+            subSave:4.5,
+            subTotal:9
+
+          }],
+          total:51
+
+
+        });
+
+      });
+
+    });
+  });
+
+  
+
+
+
+
+
+
   it('should print correct text', function() {
 
     spyOn(console, 'log');
