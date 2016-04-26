@@ -122,6 +122,6 @@ function toReceipt(receiptItems) {
   }
   str += "----------------------\n总计：" + receiptItems.total.toFixed(2) + "(元)\n节省：" + receiptItems.Save.toFixed(2) + "(元)\n" +
     "**********************";
-
+v
   return str;
 }
