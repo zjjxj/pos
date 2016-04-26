@@ -27,6 +27,99 @@ describe('pos', function() {
     ];
   });
 
+  describe('Unit Test', function() {
+    describe('Text cartItems',function () {
+      it('return right Items',function () {
+        var cartItems=buildCartItems(inputs);
+        expect(cartItems).toEqual([
+          {
+            Item:{
+              barcode: 'ITEM000000',
+              name: '可口可乐',
+              unit: '瓶',
+              price: 3.00,
+              count: 5
+
+            },
+            subTotal:15
+          },
+          {
+            Item:{
+              barcode: 'ITEM000001',
+              name: '雪碧',
+              unit: '瓶',
+              price: 3.00,
+              count: 2
+            },
+            subTotal:6
+          },
+          {
+            Item:{
+              barcode: 'ITEM000004',
+              name: '电池',
+              unit: '个',
+              price: 2.00,
+              count: 1
+            },
+            subTotal:2
+          }
+
+        ]);
+
+      });
+
+    });
+  });
+
+  describe('Unit Test', function() {
+    describe('Text receiptItems',function () {
+      it('return right receiptItems',function () {
+        var cartItems=buildCartItems(inputs);
+        var  receiptItems= buildReceiptItems(cartItems);
+        expect(receiptItems).toEqual({
+          cartItems:[
+        {
+          Item:{
+            barcode: 'ITEM000000',
+              name: '可口可乐',
+              unit: '瓶',
+              price: 3.00,
+              count: 5
+
+          },
+          subTotal:15
+        },
+        {
+          Item:{
+            barcode: 'ITEM000001',
+              name: '雪碧',
+              unit: '瓶',
+              price: 3.00,
+              count: 2
+          },
+          subTotal:6
+        },
+        {
+          Item:{
+            barcode: 'ITEM000004',
+              name: '电池',
+              unit: '个',
+              price: 2.00,
+              count: 1
+          },
+          subTotal:2
+        }],
+          total:23
+
+
+        });
+
+      });
+
+    });
+  });
+
+
   it('should print correct text', function() {
 
     spyOn(console, 'log');
