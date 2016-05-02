@@ -1,11 +1,10 @@
-//TODO: Please write code in this file.
 function printReceipt(inputs) {
-  var subitems = buildSubItems(inputs);
-  var Items = buildItems(subitems);
-  var cartItems = buildCartItems(Items);
-  var Total = buildReceiptItems(cartItems);
+  var subItems = buildSubItems(inputs);
+  var items = buildItems(subItems);
+  var cartItems = buildCartItems(items);
+  var receiptItems = buildReceiptItems(cartItems);
 
-  console.log(toReceipt(Total));
+  console.log(toReceipt(receiptItems));
 }
 
 function buildSubItems(inputs) {
@@ -13,19 +12,21 @@ function buildSubItems(inputs) {
   var subItems = [];
 
   for (var i = 0; i < inputs.length; i++) {
-    subItems = searchsameSubItems(inputs[i], allItems, subItems)
+    subItems = searchSameSubItems(inputs[i], allItems, subItems)
   }
 
   return subItems;
 }
 
-function searchsameSubItems(input, allitems, subitems) {
+function searchSameSubItems(input, allItems, subItems) {
 
-  for (var i = 0; i < allitems.length; i++) {
-    if (input === allitems[i].barcode)  subitems.push(allitems[i]);
+  for (var i = 0; i < allItems.length; i++) {
+    if (input === allItems[i].barcode) {
+      subItems.push(allItems[i]);
+    }
   }
 
-  return subitems;
+  return subItems;
 }
 
 function buildItems(subItems) {
@@ -35,17 +36,18 @@ function buildItems(subItems) {
   Items[0].count = 1;
 
   for (var i = 1; i < subItems.length; i++) {
-    Items = searchsameItems(Items, subItems[i]);
+    Items = searchSameItems(Items, subItems[i]);
   }
 
   return Items;
 }
 
-function searchsameItems(items, subItems) {
+function searchSameItems(items, subItems) {
 
   for (var i = 0; i < items.length; i++) {
     if (items[i].name === subItems.name) {
       items[i].count++;
+
       return items;
     }
   }
@@ -57,11 +59,11 @@ function searchsameItems(items, subItems) {
 
 function buildCartItems(Items) {
   var cartItems = [];
-  var subtotal = 0;
+  var subTotal = 0;
 
   for (var i = 0; i < Items.length; i++) {
-    subtotal = Items[i].price * Items[i].count;
-    cartItems.push({Item: Items[i], subTotal: subtotal});
+    subTotal = Items[i].price * Items[i].count;
+    cartItems.push({Item: Items[i], subTotal: subTotal});
   }
 
   return cartItems;
@@ -81,16 +83,16 @@ function buildReceiptItems(cartItems) {
 }
 
 function toReceipt(receiptItems) {
-  var str = "***<没钱赚商店>收据***\n";
+  var printString = "***<没钱赚商店>收据***\n";
 
   for (var i = 0; i < receiptItems.cartItems.length; i++) {
-    str += "名称：" + receiptItems.cartItems[i].Item.name + "，数量：" + receiptItems.cartItems[i].Item.count + receiptItems.cartItems[i].Item.unit +
+    printString += "名称：" + receiptItems.cartItems[i].Item.name + "，数量：" + receiptItems.cartItems[i].Item.count + receiptItems.cartItems[i].Item.unit +
       "，单价：" + receiptItems.cartItems[i].Item.price.toFixed(2) + "(元)，小计：" + receiptItems.cartItems[i].subTotal.toFixed(2) + "(元)\n"
   }
-  str += "----------------------\n总计：" + receiptItems.total.toFixed(2) + "(元)\n" +
+  printString += "----------------------\n总计：" + receiptItems.total.toFixed(2) + "(元)\n" +
     "**********************";
 
-  return str;
+  return printString;
 }
 
 

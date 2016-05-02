@@ -1,9 +1,9 @@
 function printReceipt(inputs) {
-  var Items = buildItems(inputs);
-  var cartItems = buildCartItems(Items);
-  var Total = buildReceiptItems(cartItems);
+  var items = buildItems(inputs);
+  var cartItems = buildCartItems(items);
+  var receiptItems = buildReceiptItems(cartItems);
 
-  console.log(toReceipt(Total));
+  console.log(toReceipt(receiptItems));
 }
 
 function buildItems(inputs) {
@@ -24,6 +24,7 @@ function searchsameItems(items, input) {
   for (var i = 0; i < items.length; i++) {
     if (items[i].name === input.name) {
       items[i].count++;
+
       return items;
     }
   }
@@ -59,15 +60,15 @@ function buildReceiptItems(cartItems) {
 }
 
 function toReceipt(receiptItems) {
-  var str = "***<没钱赚商店>收据***\n";
+  var printString = "***<没钱赚商店>收据***\n";
 
   for (var i = 0; i < receiptItems.cartItems.length; i++) {
-    str += "名称：" + receiptItems.cartItems[i].Item.name + "，数量：" + receiptItems.cartItems[i].Item.count + receiptItems.cartItems[i].Item.unit +
+    printString += "名称：" + receiptItems.cartItems[i].Item.name + "，数量：" + receiptItems.cartItems[i].Item.count + receiptItems.cartItems[i].Item.unit +
       "，单价：" + receiptItems.cartItems[i].Item.price.toFixed(2) + "(元)，小计：" + receiptItems.cartItems[i].subTotal.toFixed(2) + "(元)\n"
   }
-  str += "----------------------\n总计：" + receiptItems.total.toFixed(2) + "(元)\n" +
+  printString += "----------------------\n总计：" + receiptItems.total.toFixed(2) + "(元)\n" +
     "**********************";
 
-  return str;
+  return printString;
 }
 
