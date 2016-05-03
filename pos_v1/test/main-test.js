@@ -18,6 +18,7 @@ describe('pos', function () {
   });
 
   describe('Unit Test', function () {
+
     describe('Text SubItems', function () {
       it('return right subItems', function () {
         var subItems = buildSubItems(inputs);
@@ -86,10 +87,7 @@ describe('pos', function () {
         ]);
       });
     });
-  });
 
-
-  describe('Unit Test', function () {
     describe('Text Items', function () {
       it('return right Items', function () {
         var subItems = buildSubItems(inputs);
@@ -121,9 +119,7 @@ describe('pos', function () {
         ]);
       });
     });
-  });
 
-  describe('Unit Test', function () {
     describe('Text cartItems', function () {
       it('return right Items', function () {
         var subItems = buildSubItems(inputs);
@@ -132,7 +128,7 @@ describe('pos', function () {
 
         expect(cartItems).toEqual([
           {
-            Item: {
+            item: {
               barcode: 'ITEM000001',
               count: 5,
               name: '雪碧',
@@ -143,7 +139,7 @@ describe('pos', function () {
             subTotal: 12
           },
           {
-            Item: {
+            item: {
               barcode: 'ITEM000003',
               count: 2,
               name: '荔枝',
@@ -154,7 +150,7 @@ describe('pos', function () {
             subTotal: 30
           },
           {
-            Item: {
+            item: {
               barcode: 'ITEM000005',
               count: 3,
               name: '方便面',
@@ -167,9 +163,7 @@ describe('pos', function () {
         ]);
       });
     });
-  });
 
-  describe('Unit Test', function () {
     describe('Text receiptItems', function () {
       it('return right receiptItems', function () {
         var subItems = buildSubItems(inputs);
@@ -180,7 +174,7 @@ describe('pos', function () {
         expect(receiptItems).toEqual({
           Save: 7.5,
           cartItems: [{
-            Item: {
+            item: {
               barcode: 'ITEM000001',
               count: 5,
               name: '雪碧',
@@ -191,7 +185,7 @@ describe('pos', function () {
             subTotal: 12
           },
             {
-              Item: {
+              item: {
                 barcode: 'ITEM000003',
                 count: 2,
                 name: '荔枝',
@@ -202,7 +196,7 @@ describe('pos', function () {
               subTotal: 30
             },
             {
-              Item: {
+              item: {
                 barcode: 'ITEM000005',
                 count: 3,
                 name: '方便面',
@@ -217,36 +211,37 @@ describe('pos', function () {
       });
     });
   });
-});
 
+  describe('Integration Testing', function () {
+    it('should print correct text', function () {
+      inputs = [
+        'ITEM000001',
+        'ITEM000001',
+        'ITEM000001',
+        'ITEM000001',
+        'ITEM000001',
+        'ITEM000003-2',
+        'ITEM000005',
+        'ITEM000005',
+        'ITEM000005'
+      ];
 
-it('should print correct text', function () {
-  inputs = [
-    'ITEM000001',
-    'ITEM000001',
-    'ITEM000001',
-    'ITEM000001',
-    'ITEM000001',
-    'ITEM000003-2',
-    'ITEM000005',
-    'ITEM000005',
-    'ITEM000005'
-  ];
+      spyOn(console, 'log');
 
-  spyOn(console, 'log');
+      printReceipt(inputs);
 
-  printReceipt(inputs);
+      var expectText =
+        '***<没钱赚商店>收据***\n' +
+        '名称：雪碧，数量：5瓶，单价：3.00(元)，小计：12.00(元)\n' +
+        '名称：荔枝，数量：2斤，单价：15.00(元)，小计：30.00(元)\n' +
+        '名称：方便面，数量：3袋，单价：4.50(元)，小计：9.00(元)\n' +
+        '----------------------\n' +
+        '总计：51.00(元)\n' +
+        '节省：7.50(元)\n' +
+        '**********************';
 
-  var expectText =
-    '***<没钱赚商店>收据***\n' +
-    '名称：雪碧，数量：5瓶，单价：3.00(元)，小计：12.00(元)\n' +
-    '名称：荔枝，数量：2斤，单价：15.00(元)，小计：30.00(元)\n' +
-    '名称：方便面，数量：3袋，单价：4.50(元)，小计：9.00(元)\n' +
-    '----------------------\n' +
-    '总计：51.00(元)\n' +
-    '节省：7.50(元)\n' +
-    '**********************';
-
-  expect(console.log).toHaveBeenCalledWith(expectText);
+      expect(console.log).toHaveBeenCalledWith(expectText);
+    });
+  });
 });
 

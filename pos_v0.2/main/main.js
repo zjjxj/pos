@@ -30,16 +30,16 @@ function searchSameSubItems(input, allItems, subItems) {
 }
 
 function buildItems(subItems) {
-  var Items = [];
+  var items = [];
   var length = 1;
-  Items.push(subItems[0]);
-  Items[0].count = 1;
+  items.push(subItems[0]);
+  items[0].count = 1;
 
   for (var i = 1; i < subItems.length; i++) {
-    Items = searchSameItems(Items, subItems[i]);
+    items = searchSameItems(items, subItems[i]);
   }
 
-  return Items;
+  return items;
 }
 
 function searchSameItems(items, subItems) {
@@ -57,13 +57,13 @@ function searchSameItems(items, subItems) {
   return items;
 }
 
-function buildCartItems(Items) {
+function buildCartItems(items) {
   var cartItems = [];
   var subTotal = 0;
 
-  for (var i = 0; i < Items.length; i++) {
-    subTotal = Items[i].price * Items[i].count;
-    cartItems.push({Item: Items[i], subTotal: subTotal});
+  for (var i = 0; i < items.length; i++) {
+    subTotal = items[i].price * items[i].count;
+    cartItems.push({item: items[i], subTotal: subTotal});
   }
 
   return cartItems;
@@ -86,8 +86,8 @@ function toReceipt(receiptItems) {
   var printString = "***<没钱赚商店>收据***\n";
 
   for (var i = 0; i < receiptItems.cartItems.length; i++) {
-    printString += "名称：" + receiptItems.cartItems[i].Item.name + "，数量：" + receiptItems.cartItems[i].Item.count + receiptItems.cartItems[i].Item.unit +
-      "，单价：" + receiptItems.cartItems[i].Item.price.toFixed(2) + "(元)，小计：" + receiptItems.cartItems[i].subTotal.toFixed(2) + "(元)\n"
+    printString += "名称：" + receiptItems.cartItems[i].item.name + "，数量：" + receiptItems.cartItems[i].item.count + receiptItems.cartItems[i].item.unit +
+      "，单价：" + receiptItems.cartItems[i].item.price.toFixed(2) + "(元)，小计：" + receiptItems.cartItems[i].subTotal.toFixed(2) + "(元)\n"
   }
   printString += "----------------------\n总计：" + receiptItems.total.toFixed(2) + "(元)\n" +
     "**********************";

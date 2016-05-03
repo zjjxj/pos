@@ -16,22 +16,26 @@ function buildSubItems(inputs) {
     var str = inputs[i].split("");
     var length = str.length;
 
-    if (length == 10) {
-      for (var j = 0; j < allItems.length; j++) {
-        if (inputs[i] == allItems[j].barcode) {
-          subItems.push(allItems[j]);
-        }
-      }
-    } else {
-      for (var j = 0; j < str[length - 1]; j++) {
-        var input = inputs[i].substring(0, 10);
-
-        subItems = searchSameSubItems(input, allItems, subItems)
-      }
-    }
+    SearchSubItems(length, allItems, inputs, subItems, i, str)
   }
 
   return subItems;
+}
+
+function SearchSubItems(length, allItems, inputs, subItems, i, str) {
+  if (length == 10) {
+    for (var j = 0; j < allItems.length; j++) {
+      if (inputs[i] == allItems[j].barcode) {
+        subItems.push(allItems[j]);
+      }
+    }
+  } else {
+    for (var j = 0; j < str[length - 1]; j++) {
+      var input = inputs[i].substring(0, 10);
+
+      subItems = searchSameSubItems(input, allItems, subItems)
+    }
+  }
 }
 
 function searchSameSubItems(input, allItems, subItems) {
@@ -46,16 +50,16 @@ function searchSameSubItems(input, allItems, subItems) {
 }
 
 function buildItems(subItems) {
-  var Items = [];
+  var items = [];
   var length = 1;
-  Items.push(subItems[0]);
-  Items[0].count = 1;
+  items.push(subItems[0]);
+  items[0].count = 1;
 
   for (var i = 1; i < subItems.length; i++) {
-    Items = searchSameItems(Items, subItems[i]);
+    items = searchSameItems(items, subItems[i]);
   }
 
-  return Items;
+  return items;
 }
 
 function searchSameItems(items, subItems) {
@@ -73,21 +77,21 @@ function searchSameItems(items, subItems) {
   return items;
 }
 
-function buildCartItems(Items) {
+function buildCartItems(items) {
   var promotions = loadPromotions();
   var subTotal = 0;
   var subSave = 0;
   var cartItems = [];
 
-  for (var i = 0; i < Items.length; i++) {
-    if (Items[i].barcode == promotions[0].barcodes[0] || Items[i].barcode == promotions[0].barcodes[1] || Items[i].barcode == promotions[0].barcodes[2]) {
-      subTotal = Items[i].price * (parseInt(Items[i].count / 2) * 2);
-      subSave = Items[i].price * Items[i].count - subTotal;
+  for (var i = 0; i < items.length; i++) {
+    if (items[i].barcode == promotions[0].barcodes[0] || items[i].barcode == promotions[0].barcodes[1] || items[i].barcode == promotions[0].barcodes[2]) {
+      subTotal = items[i].price * (parseInt(items[i].count / 2) * 2);
+      subSave = items[i].price * items[i].count - subTotal;
     } else {
-      subTotal = Items[i].price * Items[i].count;
+      subTotal = items[i].price * items[i].count;
       subSave = 0;
     }
-    cartItems.push({Item: Items[i], subTotal: subTotal, subSave: subSave});
+    cartItems.push({item: items[i], subTotal: subTotal, subSave: subSave});
   }
 
   return cartItems;
@@ -113,8 +117,8 @@ function toReceipt(receiptItems) {
   var printString = "***<没钱赚商店>收据***\n";
 
   for (var i = 0; i < receiptItems.cartItems.length; i++) {
-    printString += "名称：" + receiptItems.cartItems[i].Item.name + "，数量：" + receiptItems.cartItems[i].Item.count + receiptItems.cartItems[i].Item.unit +
-      "，单价：" + receiptItems.cartItems[i].Item.price.toFixed(2) + "(元)，小计：" + receiptItems.cartItems[i].subTotal.toFixed(2) + "(元)\n"
+    printString += "名称：" + receiptItems.cartItems[i].item.name + "，数量：" + receiptItems.cartItems[i].item.count + receiptItems.cartItems[i].item.unit +
+      "，单价：" + receiptItems.cartItems[i].item.price.toFixed(2) + "(元)，小计：" + receiptItems.cartItems[i].subTotal.toFixed(2) + "(元)\n"
   }
   printString += "----------------------\n总计：" + receiptItems.total.toFixed(2) + "(元)\n节省：" + receiptItems.Save.toFixed(2) + "(元)\n" +
     "**********************";
